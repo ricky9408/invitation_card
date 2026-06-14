@@ -1,6 +1,6 @@
 # Wedding Invitation Prototype
 
-Japanese-first static wedding invitation prototype inspired by the referenced BRAPLA design.
+Japanese-first static wedding invitation prototype.
 
 ## Toolchain
 
@@ -52,7 +52,7 @@ The e2e suite covers Japanese, English, and Korean guest flows on desktop and mo
 
 This site is designed as a static Cloudflare Pages deployment. RSVP is handled by an external Google Form link.
 
-Recommended domain:
+Domain:
 
 ```text
 wedding.sanghyuk-lee.com
