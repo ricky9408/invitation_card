@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#5cb1c1">
+    <title>SANGHYUK & PARTNER の招待状</title>
+    <meta
+      name="description"
+      content="SANGHYUK & PARTNER の結婚式招待状"
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Antic+Didone&family=DM+Serif+Text:ital@0;1&family=Inter:wght@100..900&family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&family=Noto+Sans+JP:wght@100..900&family=Noto+Sans+KR:wght@100..900&family=Shippori+Mincho:wght@400;500;600;700;800&family=Shippori+Mincho+B1&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="language-gate" id="languageGate" aria-labelledby="languageTitle">
+      <div class="language-panel">
+        <p class="language-kicker">Wedding Invitation</p>
+        <h1 id="languageTitle">Language</h1>
+        <div class="language-options" aria-label="Language selection">
+          <button type="button" data-lang="ko"><span>Korean</span><small>한국어</small></button>
+          <button type="button" data-lang="ja"><span>Japanese</span><small>日本語</small></button>
+          <button type="button" data-lang="en"><span>English</span><small>English</small></button>
+        </div>
+      </div>
+    </div>
+
+    <main class="preview-shell" id="invitation" aria-hidden="true">
+      <aside class="side-card" aria-label="Invitation summary">
+        <div class="side-names">
+          <span>SANGHYUK</span>
+          <span>&</span>
+          <span>PARTNER</span>
+        </div>
+        <div class="side-date">
+          <p class="side-label" data-i18n="side.dateLabel">Date</p>
+          <div class="side-date-grid">
+            <span>2026</span>
+            <span class="side-slash"></span>
+            <span>10.31</span>
+          </div>
+          <p class="side-time" data-i18n="event.sideTime">受付 10:30 / 挙式 11:00</p>
+        </div>
+        <div class="side-message">
+          <p data-i18n="side.replyPrompt">ご出欠のご返信をお願いいたします</p>
+          <div class="side-deadline" data-i18n="event.replyBy">09月20日まで</div>
+          <a href="#rsvp" data-i18n="actions.rsvp">出欠を回答する</a>
+        </div>
+        <p class="side-brand">wedding invitation</p>
+      </aside>
+
+      <div class="phone-canvas" id="scrollRoot">
+        <section class="hero" id="hero">
+          <div class="hero-mark" aria-hidden="true">
+            <span></span>
+          </div>
+          <div class="hero-photo-frame">
+            <div class="hero-photo"></div>
+          </div>
+          <p class="hero-caption hero-caption-top">Wedding</p>
+          <p class="hero-caption hero-caption-mid">Invitation</p>
+          <p class="hero-caption hero-caption-bottom">2026</p>
+          <div class="hero-title" aria-label="Wedding">
+            <span>W</span>
+            <span>E</span>
+            <span>D</span>
+          </div>
+        </section>
+
+        <section class="countdown reveal" aria-label="Countdown">
+          <div class="countdown-card">
+            <div class="event-line">
+              <span>2026</span>
+              <span>10</span>
+              <span>31</span>
+            </div>
+            <div class="countdown-title">
+              <i></i>
+              <span>Countdown</span>
+              <i></i>
+            </div>
+            <div class="countdown-grid">
+              <div><strong id="countDays">000</strong><span>Days</span></div>
+              <i></i>
+              <div><strong id="countHours">00</strong><span>Hours</span></div>
+              <i></i>
+              <div><strong id="countMinutes">00</strong><span>Min</span></div>
+              <i></i>
+              <div><strong id="countSeconds">00</strong><span>Sec</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="greeting section-soft reveal" id="greeting">
+          <div class="section-title">
+            <p>Greeting</p>
+            <span data-i18n="sections.greeting">ご挨拶</span>
+          </div>
+          <div class="rounded-image greeting-image"></div>
+          <div class="vertical-message" data-i18n-list="greeting.lines">
+            <p>拝啓</p>
+            <p>このたび 私たちふたりは</p>
+            <p>結婚式を行うこととなりました</p>
+            <p>日頃お世話になっております皆さまへ</p>
+            <p>感謝の気持ちを込めて</p>
+            <p>ささやかな祝宴を催したく存じます</p>
+            <p>ご多用のところ恐縮ではございますが</p>
+            <p>ぜひご出席くださいますよう</p>
+            <p>ご案内申し上げます</p>
+            <p>敬具</p>
+          </div>
+        </section>
+
+        <section class="host reveal" id="host">
+          <div class="wave-line" aria-hidden="true"></div>
+          <div class="section-title section-title-light">
+            <p>Host</p>
+            <span data-i18n="sections.host">ホスト</span>
+          </div>
+          <article class="profile-card">
+            <div class="profile-photo groom"></div>
+            <div>
+              <p class="profile-role" data-i18n="profile.groomRole">Groom</p>
+              <h2 data-i18n="profile.groomName">イ・サンヒョク</h2>
+              <span>SANGHYUK LEE</span>
+              <p data-i18n="profile.groomMessage">皆さまにお会いできますことを心より楽しみにしております。</p>
+            </div>
+          </article>
+          <article class="profile-card">
+            <div class="profile-photo bride"></div>
+            <div>
+              <p class="profile-role" data-i18n="profile.partnerRole">Bride</p>
+              <h2 data-i18n="profile.partnerName">お名前を入力</h2>
+              <span>PARTNER NAME</span>
+              <p data-i18n="profile.partnerMessage">温かな一日を一緒に過ごしていただけましたら幸いです。</p>
+            </div>
+          </article>
+        </section>
+
+        <section class="gallery reveal" id="gallery">
+          <div class="section-title">
+            <p>Gallery</p>
+            <span data-i18n="sections.gallery">フォトギャラリー</span>
+          </div>
+          <div class="gallery-grid">
+            <div class="gallery-photo photo-a"></div>
+            <div class="gallery-photo photo-b"></div>
+            <div class="gallery-photo photo-c"></div>
+          </div>
+        </section>
+
+        <section class="information reveal" id="information">
+          <div class="info-top">
+            <p data-i18n="event.ceremonyTitle">Wedding Ceremony</p>
+            <h2>2026.10.31</h2>
+            <div class="time-row">
+              <span data-i18n="event.reception">受付 10:30</span>
+              <i></i>
+              <span data-i18n="event.ceremony">挙式 11:00</span>
+            </div>
+          </div>
+          <div class="info-block">
+            <h3>Information</h3>
+            <dl>
+              <div>
+                <dt data-i18n="info.venueLabel">会場</dt>
+                <dd data-i18n="info.venue">会場名を入力してください</dd>
+              </div>
+              <div>
+                <dt data-i18n="info.addressLabel">住所</dt>
+                <dd data-i18n="info.address">東京都内 / 詳細住所を入力してください</dd>
+              </div>
+              <div>
+                <dt data-i18n="info.accessLabel">アクセス</dt>
+                <dd data-i18n="info.access">最寄駅から徒歩約5分</dd>
+              </div>
+            </dl>
+            <a class="map-button" href="https://maps.google.com" target="_blank" rel="noreferrer">
+              Google Map
+            </a>
+          </div>
+        </section>
+
+        <section class="message reveal" id="message">
+          <div class="message-card">
+            <p class="message-title" data-i18n="message.title">Message</p>
+            <p data-i18n="message.body">
+              遠方よりお越しくださる皆さまにも安心してご参加いただけるよう、
+              会場情報や当日の流れは順次こちらに追記いたします。
+            </p>
+          </div>
+          <div class="message-card">
+            <p class="message-title" data-i18n="request.title">Request</p>
+            <p data-i18n="request.body">
+              お手数ではございますが、出欠のご回答は下記フォームより
+              期限までにお知らせください。
+            </p>
+          </div>
+        </section>
+
+        <section class="rsvp reveal" id="rsvp">
+          <div class="rsvp-inner">
+            <p class="rsvp-logo">RSVP</p>
+            <h2 data-i18n="rsvp.title">ご出欠について</h2>
+            <p data-i18n="rsvp.intro">2026年9月20日までにご回答をお願いいたします。</p>
+            <form id="rsvpForm">
+              <fieldset>
+                <legend data-i18n="rsvp.attendance">ご出席</legend>
+                <label><input type="radio" name="attendance" value="yes" required> <span data-i18n="rsvp.yes">出席</span></label>
+                <label><input type="radio" name="attendance" value="no"> <span data-i18n="rsvp.no">欠席</span></label>
+                <label><input type="radio" name="attendance" value="maybe"> <span data-i18n="rsvp.maybe">未定</span></label>
+              </fieldset>
+              <label class="input-label">
+                <span data-i18n="rsvp.name">お名前</span>
+                <input type="text" name="name" autocomplete="name" required maxlength="80" data-i18n-attr="aria-label:rsvp.name">
+              </label>
+              <label class="input-label">
+                <span data-i18n="rsvp.message">メッセージ</span>
+                <textarea rows="4" name="message" maxlength="500" data-i18n-attr="aria-label:rsvp.message"></textarea>
+              </label>
+              <button type="submit" data-i18n="rsvp.submit">回答内容を確認する</button>
+              <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </section>
+
+        <section class="thankyou">
+          <p>Thank you</p>
+          <span>SANGHYUK & PARTNER</span>
+        </section>
+
+        <nav class="floating-footer" aria-label="Quick actions">
+          <button type="button" id="changeLanguage" data-i18n="footer.language">Language</button>
+          <a href="#rsvp"><span>RSVP</span><small data-i18n="footer.rsvp">出欠回答</small></a>
+          <a href="#information"><span>Access</span><small data-i18n="footer.access">会場情報</small></a>
+        </nav>
+      </div>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

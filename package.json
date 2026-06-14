@@ -1,0 +1,19 @@
+{
+  "name": "invitation-card",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:pages": "node scripts/build-pages.mjs",
+    "deploy:pages": "npm run build:pages && npm exec wrangler pages deploy dist --project-name wedding-invitation",
+    "test:e2e": "playwright test",
+    "visual:check": "node tests/visual-check.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "wrangler": "^4.100.0"
+  },
+  "overrides": {
+    "esbuild": "^0.28.1"
+  }
+}
