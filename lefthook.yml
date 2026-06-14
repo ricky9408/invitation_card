@@ -1,0 +1,15 @@
+pre-commit:
+  parallel: false
+  commands:
+    typecheck:
+      run: pnpm run typecheck
+    build:
+      run: pnpm run build:pages
+    terraform-fmt:
+      run: pnpm run terraform:fmt:check
+
+pre-push:
+  parallel: false
+  commands:
+    validate:
+      run: pnpm run validate

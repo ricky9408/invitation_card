@@ -39,7 +39,7 @@ deploy_assets_with_terraform = false
 Then run:
 
 ```sh
-terraform init
+terraform init -upgrade
 terraform plan
 terraform apply
 ```
@@ -49,7 +49,7 @@ terraform apply
 After the Pages project exists, add the Google service account JSON as a Pages secret:
 
 ```sh
-npm exec wrangler pages secret put GOOGLE_SERVICE_ACCOUNT_JSON --project-name wedding-invitation
+pnpm exec wrangler pages secret put GOOGLE_SERVICE_ACCOUNT_JSON --project-name wedding-invitation
 ```
 
 Paste the full service account JSON when prompted.
@@ -59,13 +59,13 @@ Paste the full service account JSON when prompted.
 Build the static assets:
 
 ```sh
-npm run build:pages
+pnpm run build:pages
 ```
 
 Deploy with Wrangler or connect the repository to Cloudflare Pages:
 
 ```sh
-npm exec wrangler pages deploy dist --project-name wedding-invitation
+pnpm exec wrangler pages deploy dist --project-name wedding-invitation
 ```
 
 If you set `deploy_assets_with_terraform = true`, `terraform apply` runs the deploy command through `local-exec` after the Pages project and domain exist. Keep it `false` if you prefer Git-connected Pages or a separate CI deployment step.

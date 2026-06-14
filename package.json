@@ -3,17 +3,35 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@11.6.0",
+  "engines": {
+    "node": ">=25.6.1",
+    "pnpm": ">=11.6.0"
+  },
   "scripts": {
     "build:pages": "node scripts/build-pages.mjs",
-    "deploy:pages": "npm run build:pages && npm exec wrangler pages deploy dist --project-name wedding-invitation",
+    "deploy:cloudflare": "sh scripts/deploy-cloudflare.sh",
+    "deploy:pages": "pnpm run deploy:cloudflare",
+    "lefthook:install": "lefthook install",
+    "security:audit": "pnpm audit --audit-level high",
+    "terraform:fmt": "terraform -chdir=terraform fmt -recursive",
+    "terraform:fmt:check": "terraform -chdir=terraform fmt -check -recursive",
+    "terraform:init": "terraform -chdir=terraform init",
+    "terraform:plan": "terraform -chdir=terraform plan -out=tfplan",
+    "terraform:validate": "terraform -chdir=terraform validate",
     "test:e2e": "playwright test",
+    "typecheck": "tsc -b",
+    "validate": "sh scripts/validate-all.sh",
+    "validate:app": "sh scripts/validate-app.sh",
+    "validate:terraform": "sh scripts/validate-terraform.sh",
     "visual:check": "node tests/visual-check.mjs"
   },
   "devDependencies": {
-    "@playwright/test": "^1.60.0",
-    "wrangler": "^4.100.0"
-  },
-  "overrides": {
-    "esbuild": "^0.28.1"
+    "@cloudflare/workers-types": "4.20260613.1",
+    "@playwright/test": "1.60.0",
+    "esbuild": "0.28.1",
+    "lefthook": "2.1.9",
+    "typescript": "6.0.3",
+    "wrangler": "4.100.0"
   }
 }

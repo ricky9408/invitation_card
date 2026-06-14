@@ -1,4 +1,79 @@
-const translations = {
+type Language = "ja" | "en" | "ko";
+type Translation = {
+  meta: {
+    title: string;
+    description: string;
+  };
+  side: {
+    dateLabel: string;
+    replyPrompt: string;
+  };
+  event: {
+    sideTime: string;
+    replyBy: string;
+    ceremonyTitle: string;
+    reception: string;
+    ceremony: string;
+  };
+  sections: {
+    greeting: string;
+    host: string;
+    gallery: string;
+  };
+  greeting: {
+    lines: string[];
+  };
+  profile: {
+    groomRole: string;
+    groomName: string;
+    groomMessage: string;
+    partnerRole: string;
+    partnerName: string;
+    partnerMessage: string;
+  };
+  info: {
+    venueLabel: string;
+    venue: string;
+    addressLabel: string;
+    address: string;
+    accessLabel: string;
+    access: string;
+  };
+  message: {
+    title: string;
+    body: string;
+  };
+  request: {
+    title: string;
+    body: string;
+  };
+  rsvp: {
+    title: string;
+    intro: string;
+    attendance: string;
+    yes: string;
+    no: string;
+    maybe: string;
+    name: string;
+    message: string;
+    submit: string;
+    sending: string;
+    success: string;
+    error: string;
+  };
+  actions: {
+    rsvp: string;
+  };
+  footer: {
+    language: string;
+    rsvp: string;
+    access: string;
+  };
+};
+
+type TranslationPath = string;
+
+const translations: Record<Language, Translation> = {
   ja: {
     meta: {
       title: "SANGHYUK & PARTNER の招待状",
@@ -245,39 +320,62 @@ const translations = {
   },
 };
 
-const state = {
-  selectedLanguage: localStorage.getItem("invitationLanguage") || "ja",
-  eventDate: new Date("2026-10-31T11:00:00+09:00"),
-};
+const languages = new Set<Language>(["ja", "en", "ko"]);
 
-const gate = document.getElementById("languageGate");
-const invitation = document.getElementById("invitation");
-const changeLanguage = document.getElementById("changeLanguage");
-const languageButtons = document.querySelectorAll("[data-lang]");
-const metaDescription = document.querySelector('meta[name="description"]');
-const rsvpForm = document.getElementById("rsvpForm");
-const formStatus = document.getElementById("formStatus");
-
-function resolvePath(source, path) {
-  return path.split(".").reduce((value, key) => value?.[key], source);
+function isLanguage(value: string | null | undefined): value is Language {
+  return Boolean(value && languages.has(value as Language));
 }
 
-function applyTranslations(language) {
-  const dictionary = translations[language] ?? translations.ja;
+const savedLanguage = localStorage.getItem("invitationLanguage");
+const state = {
+  selectedLanguage: isLanguage(savedLanguage) ? savedLanguage : "ja",
+  eventDate: new Date("2026-10-31T11:00:00+09:00"),
+} satisfies {
+  selectedLanguage: Language;
+  eventDate: Date;
+};
+
+function requiredElement<T extends Element>(selector: string, root: ParentNode = document): T {
+  const element = root.querySelector<T>(selector);
+  if (!element) {
+    throw new Error(`Missing required element: ${selector}`);
+  }
+  return element;
+}
+
+const gate = requiredElement<HTMLElement>("#languageGate");
+const invitation = requiredElement<HTMLElement>("#invitation");
+const changeLanguage = requiredElement<HTMLButtonElement>("#changeLanguage");
+const languageButtons = document.querySelectorAll<HTMLButtonElement>("[data-lang]");
+const metaDescription = requiredElement<HTMLMetaElement>('meta[name="description"]');
+const rsvpForm = requiredElement<HTMLFormElement>("#rsvpForm");
+const formStatus = requiredElement<HTMLElement>("#formStatus");
+
+function resolvePath(source: Translation, path: TranslationPath): unknown {
+  return path.split(".").reduce<unknown>((value, key) => {
+    if (value && typeof value === "object" && key in value) {
+      return (value as Record<string, unknown>)[key];
+    }
+    return undefined;
+  }, source);
+}
+
+function applyTranslations(language: Language): void {
+  const dictionary = translations[language];
   state.selectedLanguage = language;
   document.documentElement.lang = language;
   document.title = dictionary.meta.title;
   metaDescription.setAttribute("content", dictionary.meta.description);
 
-  document.querySelectorAll("[data-i18n]").forEach((element) => {
-    const value = resolvePath(dictionary, element.dataset.i18n);
+  document.querySelectorAll<HTMLElement>("[data-i18n]").forEach((element) => {
+    const value = resolvePath(dictionary, element.dataset.i18n ?? "");
     if (typeof value === "string") {
       element.textContent = value;
     }
   });
 
-  document.querySelectorAll("[data-i18n-list]").forEach((element) => {
-    const value = resolvePath(dictionary, element.dataset.i18nList);
+  document.querySelectorAll<HTMLElement>("[data-i18n-list]").forEach((element) => {
+    const value = resolvePath(dictionary, element.dataset.i18nList ?? "");
     if (Array.isArray(value)) {
       element.replaceChildren(...value.map((line) => {
         const paragraph = document.createElement("p");
@@ -287,9 +385,12 @@ function applyTranslations(language) {
     }
   });
 
-  document.querySelectorAll("[data-i18n-attr]").forEach((element) => {
-    element.dataset.i18nAttr.split(",").forEach((binding) => {
+  document.querySelectorAll<HTMLElement>("[data-i18n-attr]").forEach((element) => {
+    element.dataset.i18nAttr?.split(",").forEach((binding: string) => {
       const [attribute, key] = binding.split(":");
+      if (!attribute || !key) {
+        return;
+      }
       const value = resolvePath(dictionary, key);
       if (attribute && typeof value === "string") {
         element.setAttribute(attribute, value);
@@ -302,7 +403,7 @@ function applyTranslations(language) {
   });
 }
 
-function openInvitation(language) {
+function openInvitation(language: Language): void {
   applyTranslations(language);
   localStorage.setItem("invitationLanguage", language);
   gate.classList.add("is-hidden");
@@ -310,16 +411,18 @@ function openInvitation(language) {
   window.scrollTo(0, 0);
 }
 
-function showLanguageGate() {
+function showLanguageGate(): void {
   gate.classList.remove("is-hidden");
   invitation.setAttribute("aria-hidden", "true");
-  const selectedButton = document.querySelector(`[data-lang="${state.selectedLanguage}"]`);
+  const selectedButton = document.querySelector<HTMLButtonElement>(`[data-lang="${state.selectedLanguage}"]`);
   selectedButton?.focus();
 }
 
 languageButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    openInvitation(button.dataset.lang);
+    if (isLanguage(button.dataset.lang)) {
+      openInvitation(button.dataset.lang);
+    }
   });
 });
 
@@ -346,11 +449,11 @@ document.querySelectorAll(".reveal").forEach((element) => {
   revealObserver.observe(element);
 });
 
-function pad(value) {
+function pad(value: number): string {
   return String(value).padStart(2, "0");
 }
 
-function updateCountdown() {
+function updateCountdown(): void {
   const now = new Date();
   const diff = Math.max(0, state.eventDate.getTime() - now.getTime());
   const totalSeconds = Math.floor(diff / 1000);
@@ -359,10 +462,10 @@ function updateCountdown() {
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
 
-  document.getElementById("countDays").textContent = String(days).padStart(3, "0");
-  document.getElementById("countHours").textContent = pad(hours);
-  document.getElementById("countMinutes").textContent = pad(minutes);
-  document.getElementById("countSeconds").textContent = pad(seconds);
+  requiredElement<HTMLElement>("#countDays").textContent = String(days).padStart(3, "0");
+  requiredElement<HTMLElement>("#countHours").textContent = pad(hours);
+  requiredElement<HTMLElement>("#countMinutes").textContent = pad(minutes);
+  requiredElement<HTMLElement>("#countSeconds").textContent = pad(seconds);
 }
 
 updateCountdown();
@@ -375,7 +478,7 @@ rsvpForm.addEventListener("submit", async (event) => {
   }
 
   const dictionary = translations[state.selectedLanguage].rsvp;
-  const submitButton = rsvpForm.querySelector('button[type="submit"]');
+  const submitButton = requiredElement<HTMLButtonElement>('button[type="submit"]', rsvpForm);
   const formData = new FormData(rsvpForm);
   const payload = {
     language: state.selectedLanguage,

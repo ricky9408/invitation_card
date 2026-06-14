@@ -1,7 +1,11 @@
 node_modules/
+.pnpm-store/
 dist/
 test-results/
+tests/artifacts/
+*.tsbuildinfo
 .terraform/
+terraform/tfplan
 terraform.tfstate
 terraform.tfstate.*
 *.tfvars

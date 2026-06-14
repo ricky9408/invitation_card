@@ -1,6 +1,42 @@
-const allowedAttendances = new Set(["yes", "no", "maybe"]);
+type Attendance = "yes" | "no" | "maybe";
+type Language = "ja" | "en" | "ko";
 
-function jsonResponse(body, status = 200) {
+type Env = {
+  GOOGLE_SERVICE_ACCOUNT_JSON?: string;
+  GOOGLE_SHEET_ID?: string;
+  GOOGLE_SHEET_RANGE?: string;
+};
+
+type ServiceAccount = {
+  client_email: string;
+  private_key: string;
+};
+
+type GoogleTokenResponse = {
+  access_token?: unknown;
+};
+
+type RsvpPayload = {
+  attendance: Attendance;
+  name: string;
+  message: string;
+  language: Language;
+};
+
+type ErrorPayload = {
+  ok: false;
+  error: string;
+};
+
+type SuccessPayload = {
+  ok: true;
+};
+
+const allowedAttendances = new Set<Attendance>(["yes", "no", "maybe"]);
+const allowedLanguages = new Set<Language>(["ja", "en", "ko"]);
+const maxBodyBytes = 4096;
+
+function jsonResponse(body: ErrorPayload | SuccessPayload, status = 200): Response {
   return new Response(JSON.stringify(body), {
     status,
     headers: {
@@ -10,7 +46,7 @@ function jsonResponse(body, status = 200) {
   });
 }
 
-function base64Url(input) {
+function base64Url(input: string | Uint8Array): string {
   const bytes = input instanceof Uint8Array ? input : new TextEncoder().encode(input);
   let binary = "";
   bytes.forEach((byte) => {
@@ -19,7 +55,7 @@ function base64Url(input) {
   return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
-function pemToArrayBuffer(pem) {
+function pemToArrayBuffer(pem: string): ArrayBuffer {
   const base64 = pem
     .replace(/-----BEGIN PRIVATE KEY-----/g, "")
     .replace(/-----END PRIVATE KEY-----/g, "")
@@ -32,7 +68,7 @@ function pemToArrayBuffer(pem) {
   return bytes.buffer;
 }
 
-async function signJwt(serviceAccount) {
+async function signJwt(serviceAccount: ServiceAccount): Promise<string> {
   const now = Math.floor(Date.now() / 1000);
   const header = {
     alg: "RS256",
@@ -64,7 +100,7 @@ async function signJwt(serviceAccount) {
   return `${unsignedToken}.${base64Url(new Uint8Array(signature))}`;
 }
 
-async function getAccessToken(serviceAccount) {
+async function getAccessToken(serviceAccount: ServiceAccount): Promise<string> {
   const assertion = await signJwt(serviceAccount);
   const response = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
@@ -81,18 +117,46 @@ async function getAccessToken(serviceAccount) {
     throw new Error(`Google token request failed: ${response.status}`);
   }
 
-  const token = await response.json();
+  const token = (await response.json()) as GoogleTokenResponse;
+  if (!token || typeof token.access_token !== "string") {
+    throw new Error("Google token response did not include an access token.");
+  }
   return token.access_token;
 }
 
-function sanitizePayload(payload) {
-  const attendance = String(payload.attendance || "").trim();
-  const name = String(payload.name || "").trim().slice(0, 80);
-  const message = String(payload.message || "").trim().slice(0, 500);
-  const language = String(payload.language || "").trim().slice(0, 8);
+function readStringField(payload: Record<string, unknown>, key: string): string {
+  const value = payload[key];
+  return typeof value === "string" ? value.trim() : "";
+}
 
-  if (!allowedAttendances.has(attendance)) {
+function parseServiceAccount(rawJson: string): ServiceAccount {
+  const parsed = JSON.parse(rawJson) as Partial<ServiceAccount>;
+  if (typeof parsed.client_email !== "string" || typeof parsed.private_key !== "string") {
+    throw new Error("Google service account secret is invalid.");
+  }
+  return {
+    client_email: parsed.client_email,
+    private_key: parsed.private_key,
+  };
+}
+
+function sanitizePayload(payload: unknown): { error: string } | { value: RsvpPayload } {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    return { error: "Invalid RSVP payload." };
+  }
+
+  const fields = payload as Record<string, unknown>;
+  const attendance = readStringField(fields, "attendance");
+  const name = readStringField(fields, "name").slice(0, 80);
+  const message = readStringField(fields, "message").slice(0, 500);
+  const language = readStringField(fields, "language");
+
+  if (!allowedAttendances.has(attendance as Attendance)) {
     return { error: "Invalid attendance value." };
+  }
+
+  if (!allowedLanguages.has(language as Language)) {
+    return { error: "Invalid language value." };
   }
 
   if (!name) {
@@ -101,15 +165,23 @@ function sanitizePayload(payload) {
 
   return {
     value: {
-      attendance,
+      attendance: attendance as Attendance,
       name,
       message,
-      language,
+      language: language as Language,
     },
   };
 }
 
-export async function onRequestPost(context) {
+async function readJsonPayload(request: Request): Promise<unknown> {
+  const contentLength = Number(request.headers.get("content-length") || "0");
+  if (contentLength > maxBodyBytes) {
+    throw new Error("RSVP payload is too large.");
+  }
+  return request.json();
+}
+
+export const onRequestPost: PagesFunction<Env> = async (context) => {
   try {
     const { env, request } = context;
     const serviceAccountJson = env.GOOGLE_SERVICE_ACCOUNT_JSON;
@@ -120,13 +192,13 @@ export async function onRequestPost(context) {
       return jsonResponse({ ok: false, error: "RSVP endpoint is not configured." }, 500);
     }
 
-    const payload = await request.json();
+    const payload = await readJsonPayload(request);
     const result = sanitizePayload(payload);
-    if (result.error) {
+    if ("error" in result) {
       return jsonResponse({ ok: false, error: result.error }, 400);
     }
 
-    const serviceAccount = JSON.parse(serviceAccountJson);
+    const serviceAccount = parseServiceAccount(serviceAccountJson);
     const accessToken = await getAccessToken(serviceAccount);
     const row = [
       new Date().toISOString(),
@@ -138,7 +210,7 @@ export async function onRequestPost(context) {
     const appendUrl = new URL(
       `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${encodeURIComponent(sheetRange)}:append`,
     );
-    appendUrl.searchParams.set("valueInputOption", "USER_ENTERED");
+    appendUrl.searchParams.set("valueInputOption", "RAW");
     appendUrl.searchParams.set("insertDataOption", "INSERT_ROWS");
 
     const appendResponse = await fetch(appendUrl, {
@@ -158,6 +230,7 @@ export async function onRequestPost(context) {
 
     return jsonResponse({ ok: true });
   } catch (error) {
-    return jsonResponse({ ok: false, error: error.message }, 500);
+    console.error("RSVP submission failed", error);
+    return jsonResponse({ ok: false, error: "RSVP submission failed." }, 500);
   }
-}
+};

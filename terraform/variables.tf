@@ -50,7 +50,7 @@ variable "google_sheet_range" {
 }
 
 variable "deploy_assets_with_terraform" {
-  description = "When true, terraform apply also runs npm run deploy:pages via local-exec after creating Cloudflare resources."
+  description = "When true, terraform apply also runs pnpm run deploy:cloudflare via local-exec after creating Cloudflare resources."
   type        = bool
   default     = false
 }
