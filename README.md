@@ -50,7 +50,7 @@ The e2e suite covers Japanese, English, and Korean guest flows on desktop and mo
 
 ## Deployment
 
-This site is designed for Cloudflare Pages with a Pages Function at `/api/rsvp`.
+This site is designed as a static Cloudflare Pages deployment. RSVP is handled by an external Google Form link.
 
 Recommended domain:
 
@@ -72,7 +72,7 @@ Deploy assets manually after Terraform creates the Pages project:
 pnpm run deploy:cloudflare
 ```
 
-RSVP responses are appended to Google Sheets through the Cloudflare Pages Function in `functions/api/rsvp.ts`. The Google service account JSON must be stored as the Cloudflare Pages secret `GOOGLE_SERVICE_ACCOUNT_JSON`.
+Before production, replace the placeholder Google Form URL in `src/app.ts` and `index.html` with the real RSVP form URL.
 
 ## Agent Validation
 
@@ -91,3 +91,4 @@ Lefthook is configured in `lefthook.yml` to run TypeScript/build/Terraform forma
 - Replace `assets/wedding-placeholder.jpg` with real couple photos.
 - Replace `PARTNER` and `お名前を入力`.
 - Replace venue, date, time, and map URL.
+- Replace the Google Form RSVP placeholder URL.

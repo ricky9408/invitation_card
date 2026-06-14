@@ -27,7 +27,6 @@
     "visual:check": "node tests/visual-check.mjs"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20260613.1",
     "@playwright/test": "1.60.0",
     "esbuild": "0.28.1",
     "lefthook": "2.1.9",

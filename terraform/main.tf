@@ -12,30 +12,10 @@ resource "cloudflare_pages_project" "invitation" {
   deployment_configs = {
     production = {
       compatibility_date = "2026-06-14"
-      env_vars = {
-        GOOGLE_SHEET_ID = {
-          type  = "plain_text"
-          value = var.google_sheet_id
-        }
-        GOOGLE_SHEET_RANGE = {
-          type  = "plain_text"
-          value = var.google_sheet_range
-        }
-      }
     }
 
     preview = {
       compatibility_date = "2026-06-14"
-      env_vars = {
-        GOOGLE_SHEET_ID = {
-          type  = "plain_text"
-          value = var.google_sheet_id
-        }
-        GOOGLE_SHEET_RANGE = {
-          type  = "plain_text"
-          value = var.google_sheet_range
-        }
-      }
     }
   }
 }

@@ -50,16 +50,8 @@ type Translation = {
   rsvp: {
     title: string;
     intro: string;
-    attendance: string;
-    yes: string;
-    no: string;
-    maybe: string;
-    name: string;
-    message: string;
     submit: string;
-    sending: string;
-    success: string;
-    error: string;
+    note: string;
   };
   actions: {
     rsvp: string;
@@ -136,16 +128,8 @@ const translations: Record<Language, Translation> = {
     rsvp: {
       title: "ご出欠について",
       intro: "2026年9月20日までにご回答をお願いいたします。",
-      attendance: "ご出席",
-      yes: "出席",
-      no: "欠席",
-      maybe: "未定",
-      name: "お名前",
-      message: "メッセージ",
-      submit: "回答内容を確認する",
-      sending: "送信しています...",
-      success: "ご回答ありがとうございました。",
-      error: "送信できませんでした。時間をおいてもう一度お試しください。",
+      submit: "Googleフォームで回答する",
+      note: "フォームは別タブで開きます。",
     },
     actions: {
       rsvp: "出欠を回答する",
@@ -193,10 +177,12 @@ const translations: Record<Language, Translation> = {
     profile: {
       groomRole: "Groom",
       groomName: "Sanghyuk Lee",
-      groomMessage: "I am looking forward to sharing this special day with you.",
+      groomMessage:
+        "I am looking forward to sharing this special day with you.",
       partnerRole: "Bride",
       partnerName: "Partner name",
-      partnerMessage: "It would mean so much to spend a warm and joyful day together.",
+      partnerMessage:
+        "It would mean so much to spend a warm and joyful day together.",
     },
     info: {
       venueLabel: "Venue",
@@ -217,16 +203,8 @@ const translations: Record<Language, Translation> = {
     rsvp: {
       title: "RSVP",
       intro: "Please reply by September 20, 2026.",
-      attendance: "Attendance",
-      yes: "Attending",
-      no: "Not attending",
-      maybe: "Not sure yet",
-      name: "Name",
-      message: "Message",
-      submit: "Review response",
-      sending: "Sending...",
-      success: "Thank you. Your response has been received.",
-      error: "We could not send your response. Please try again later.",
+      submit: "Reply with Google Form",
+      note: "The form opens in a new tab.",
     },
     actions: {
       rsvp: "Reply to RSVP",
@@ -274,10 +252,12 @@ const translations: Record<Language, Translation> = {
     profile: {
       groomRole: "Groom",
       groomName: "이상혁",
-      groomMessage: "소중한 분들과 이 날을 함께할 수 있기를 진심으로 기다리고 있습니다.",
+      groomMessage:
+        "소중한 분들과 이 날을 함께할 수 있기를 진심으로 기다리고 있습니다.",
       partnerRole: "Bride",
       partnerName: "배우자 이름",
-      partnerMessage: "따뜻하고 기쁜 하루를 함께 나눌 수 있다면 감사하겠습니다.",
+      partnerMessage:
+        "따뜻하고 기쁜 하루를 함께 나눌 수 있다면 감사하겠습니다.",
     },
     info: {
       venueLabel: "장소",
@@ -298,16 +278,8 @@ const translations: Record<Language, Translation> = {
     rsvp: {
       title: "참석 여부",
       intro: "2026년 9월 20일까지 회신 부탁드립니다.",
-      attendance: "참석 여부",
-      yes: "참석",
-      no: "불참",
-      maybe: "미정",
-      name: "성함",
-      message: "메시지",
-      submit: "응답 확인하기",
-      sending: "전송 중입니다...",
-      success: "응답해 주셔서 감사합니다.",
-      error: "응답을 전송하지 못했습니다. 잠시 후 다시 시도해 주세요.",
+      submit: "Google Form으로 답변하기",
+      note: "폼은 새 탭에서 열립니다.",
     },
     actions: {
       rsvp: "참석 여부 답변하기",
@@ -335,7 +307,10 @@ const state = {
   eventDate: Date;
 };
 
-function requiredElement<T extends Element>(selector: string, root: ParentNode = document): T {
+function requiredElement<T extends Element>(
+  selector: string,
+  root: ParentNode = document,
+): T {
   const element = root.querySelector<T>(selector);
   if (!element) {
     throw new Error(`Missing required element: ${selector}`);
@@ -346,10 +321,13 @@ function requiredElement<T extends Element>(selector: string, root: ParentNode =
 const gate = requiredElement<HTMLElement>("#languageGate");
 const invitation = requiredElement<HTMLElement>("#invitation");
 const changeLanguage = requiredElement<HTMLButtonElement>("#changeLanguage");
-const languageButtons = document.querySelectorAll<HTMLButtonElement>("[data-lang]");
-const metaDescription = requiredElement<HTMLMetaElement>('meta[name="description"]');
-const rsvpForm = requiredElement<HTMLFormElement>("#rsvpForm");
-const formStatus = requiredElement<HTMLElement>("#formStatus");
+const languageButtons =
+  document.querySelectorAll<HTMLButtonElement>("[data-lang]");
+const metaDescription = requiredElement<HTMLMetaElement>(
+  'meta[name="description"]',
+);
+const rsvpLink = requiredElement<HTMLAnchorElement>("#rsvpLink");
+const googleFormUrl = "https://forms.gle/aVozsCosGEx8gh6XA";
 
 function resolvePath(source: Translation, path: TranslationPath): unknown {
   return path.split(".").reduce<unknown>((value, key) => {
@@ -374,32 +352,41 @@ function applyTranslations(language: Language): void {
     }
   });
 
-  document.querySelectorAll<HTMLElement>("[data-i18n-list]").forEach((element) => {
-    const value = resolvePath(dictionary, element.dataset.i18nList ?? "");
-    if (Array.isArray(value)) {
-      element.replaceChildren(...value.map((line) => {
-        const paragraph = document.createElement("p");
-        paragraph.textContent = line;
-        return paragraph;
-      }));
-    }
-  });
-
-  document.querySelectorAll<HTMLElement>("[data-i18n-attr]").forEach((element) => {
-    element.dataset.i18nAttr?.split(",").forEach((binding: string) => {
-      const [attribute, key] = binding.split(":");
-      if (!attribute || !key) {
-        return;
-      }
-      const value = resolvePath(dictionary, key);
-      if (attribute && typeof value === "string") {
-        element.setAttribute(attribute, value);
+  document
+    .querySelectorAll<HTMLElement>("[data-i18n-list]")
+    .forEach((element) => {
+      const value = resolvePath(dictionary, element.dataset.i18nList ?? "");
+      if (Array.isArray(value)) {
+        element.replaceChildren(
+          ...value.map((line) => {
+            const paragraph = document.createElement("p");
+            paragraph.textContent = line;
+            return paragraph;
+          }),
+        );
       }
     });
-  });
+
+  document
+    .querySelectorAll<HTMLElement>("[data-i18n-attr]")
+    .forEach((element) => {
+      element.dataset.i18nAttr?.split(",").forEach((binding: string) => {
+        const [attribute, key] = binding.split(":");
+        if (!attribute || !key) {
+          return;
+        }
+        const value = resolvePath(dictionary, key);
+        if (attribute && typeof value === "string") {
+          element.setAttribute(attribute, value);
+        }
+      });
+    });
 
   languageButtons.forEach((button) => {
-    button.setAttribute("aria-pressed", String(button.dataset.lang === language));
+    button.setAttribute(
+      "aria-pressed",
+      String(button.dataset.lang === language),
+    );
   });
 }
 
@@ -414,7 +401,9 @@ function openInvitation(language: Language): void {
 function showLanguageGate(): void {
   gate.classList.remove("is-hidden");
   invitation.setAttribute("aria-hidden", "true");
-  const selectedButton = document.querySelector<HTMLButtonElement>(`[data-lang="${state.selectedLanguage}"]`);
+  const selectedButton = document.querySelector<HTMLButtonElement>(
+    `[data-lang="${state.selectedLanguage}"]`,
+  );
   selectedButton?.focus();
 }
 
@@ -429,6 +418,7 @@ languageButtons.forEach((button) => {
 changeLanguage.addEventListener("click", showLanguageGate);
 
 applyTranslations(state.selectedLanguage);
+rsvpLink.href = googleFormUrl;
 
 const revealObserver = new IntersectionObserver(
   (entries) => {
@@ -462,7 +452,9 @@ function updateCountdown(): void {
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
 
-  requiredElement<HTMLElement>("#countDays").textContent = String(days).padStart(3, "0");
+  requiredElement<HTMLElement>("#countDays").textContent = String(
+    days,
+  ).padStart(3, "0");
   requiredElement<HTMLElement>("#countHours").textContent = pad(hours);
   requiredElement<HTMLElement>("#countMinutes").textContent = pad(minutes);
   requiredElement<HTMLElement>("#countSeconds").textContent = pad(seconds);
@@ -470,43 +462,3 @@ function updateCountdown(): void {
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
-
-rsvpForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  if (!rsvpForm.reportValidity()) {
-    return;
-  }
-
-  const dictionary = translations[state.selectedLanguage].rsvp;
-  const submitButton = requiredElement<HTMLButtonElement>('button[type="submit"]', rsvpForm);
-  const formData = new FormData(rsvpForm);
-  const payload = {
-    language: state.selectedLanguage,
-    attendance: formData.get("attendance"),
-    name: formData.get("name"),
-    message: formData.get("message"),
-  };
-
-  submitButton.disabled = true;
-  formStatus.textContent = dictionary.sending;
-
-  try {
-    const response = await fetch("/api/rsvp", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok || body.ok === false) {
-      throw new Error(body.error || "RSVP request failed");
-    }
-    formStatus.textContent = dictionary.success;
-    rsvpForm.reset();
-  } catch (_error) {
-    formStatus.textContent = dictionary.error;
-  } finally {
-    submitButton.disabled = false;
-  }
-});

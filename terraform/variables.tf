@@ -38,17 +38,6 @@ variable "production_branch" {
   default     = "main"
 }
 
-variable "google_sheet_id" {
-  description = "Spreadsheet ID that receives RSVP rows."
-  type        = string
-}
-
-variable "google_sheet_range" {
-  description = "A1 range used by Google Sheets append. The first sheet should include matching headers."
-  type        = string
-  default     = "RSVP!A1"
-}
-
 variable "deploy_assets_with_terraform" {
   description = "When true, terraform apply also runs pnpm run deploy:cloudflare via local-exec after creating Cloudflare resources."
   type        = bool

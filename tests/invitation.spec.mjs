@@ -10,11 +10,7 @@ const languages = {
     venueLabel: "会場",
     rsvpTitle: "ご出欠について",
     footerRsvp: "出欠回答",
-    attendance: "出席",
-    name: "お名前",
-    message: "メッセージ",
-    submit: "回答内容を確認する",
-    success: "ご回答ありがとうございました。",
+    submit: "Googleフォームで回答する",
   },
   en: {
     button: /English/,
@@ -25,11 +21,7 @@ const languages = {
     venueLabel: "Venue",
     rsvpTitle: "RSVP",
     footerRsvp: "RSVP",
-    attendance: "Attending",
-    name: "Name",
-    message: "Message",
-    submit: "Review response",
-    success: "Thank you. Your response has been received.",
+    submit: "Reply with Google Form",
   },
   ko: {
     button: /Korean/,
@@ -40,11 +32,7 @@ const languages = {
     venueLabel: "장소",
     rsvpTitle: "참석 여부",
     footerRsvp: "참석 답변",
-    attendance: "참석",
-    name: "성함",
-    message: "메시지",
-    submit: "응답 확인하기",
-    success: "응답해 주셔서 감사합니다.",
+    submit: "Google Form으로 답변하기",
   },
 };
 
@@ -58,17 +46,8 @@ async function selectLanguage(page, language) {
 
 test.describe("wedding invitation guest experience", () => {
   for (const language of Object.keys(languages)) {
-    test(`${language} guest can read invitation and submit RSVP draft`, async ({ page }) => {
+    test(`${language} guest can read invitation and open RSVP form link`, async ({ page }) => {
       const text = languages[language];
-      let rsvpPayload;
-      await page.route("**/api/rsvp", async (route) => {
-        rsvpPayload = route.request().postDataJSON();
-        await route.fulfill({
-          status: 200,
-          contentType: "application/json",
-          body: JSON.stringify({ ok: true }),
-        });
-      });
 
       await selectLanguage(page, language);
 
@@ -91,18 +70,10 @@ test.describe("wedding invitation guest experience", () => {
       await expect(page.locator("#rsvp [data-i18n='rsvp.title']")).toHaveText(text.rsvpTitle);
       await expect(page.locator("#rsvp [data-i18n='rsvp.title']")).toBeVisible();
 
-      await page.getByLabel(text.attendance, { exact: true }).check();
-      await page.getByLabel(text.name, { exact: true }).fill("Guest User");
-      await page.getByLabel(text.message, { exact: true }).fill("Congratulations.");
-
-      await page.getByRole("button", { name: text.submit }).click();
-      await expect(page.locator("#formStatus")).toHaveText(text.success);
-      expect(rsvpPayload).toMatchObject({
-        language,
-        attendance: "yes",
-        name: "Guest User",
-        message: "Congratulations.",
-      });
+      const formLink = page.getByRole("link", { name: text.submit });
+      await expect(formLink).toBeVisible();
+      await expect(formLink).toHaveAttribute("target", "_blank");
+      await expect(formLink).toHaveAttribute("href", /^https:\/\/forms\.gle\//);
     });
   }
 

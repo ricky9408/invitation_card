@@ -208,24 +208,15 @@
             <p class="rsvp-logo">RSVP</p>
             <h2 data-i18n="rsvp.title">ご出欠について</h2>
             <p data-i18n="rsvp.intro">2026年9月20日までにご回答をお願いいたします。</p>
-            <form id="rsvpForm">
-              <fieldset>
-                <legend data-i18n="rsvp.attendance">ご出席</legend>
-                <label><input type="radio" name="attendance" value="yes" required> <span data-i18n="rsvp.yes">出席</span></label>
-                <label><input type="radio" name="attendance" value="no"> <span data-i18n="rsvp.no">欠席</span></label>
-                <label><input type="radio" name="attendance" value="maybe"> <span data-i18n="rsvp.maybe">未定</span></label>
-              </fieldset>
-              <label class="input-label">
-                <span data-i18n="rsvp.name">お名前</span>
-                <input type="text" name="name" autocomplete="name" required maxlength="80" data-i18n-attr="aria-label:rsvp.name">
-              </label>
-              <label class="input-label">
-                <span data-i18n="rsvp.message">メッセージ</span>
-                <textarea rows="4" name="message" maxlength="500" data-i18n-attr="aria-label:rsvp.message"></textarea>
-              </label>
-              <button type="submit" data-i18n="rsvp.submit">回答内容を確認する</button>
-              <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
-            </form>
+            <a
+              class="rsvp-link"
+              id="rsvpLink"
+              href="https://forms.gle/REPLACE_WITH_YOUR_GOOGLE_FORM_ID"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-i18n="rsvp.submit"
+            >Googleフォームで回答する</a>
+            <p class="rsvp-note" data-i18n="rsvp.note">フォームは別タブで開きます。</p>
           </div>
         </section>
 
