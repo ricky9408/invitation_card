@@ -1,4 +1,4 @@
-import { cp, mkdir, rm } from "node:fs/promises";
+import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { build } from "esbuild";
 
 const files = ["index.html", "styles.css", "_headers", "assets"];
@@ -22,5 +22,13 @@ for (const file of files) {
     recursive: true,
   });
 }
+
+const distIndex = new URL("../dist/index.html", import.meta.url);
+const html = await readFile(distIndex, "utf8");
+await writeFile(
+  distIndex,
+  html.replace('src="/src/app.ts"', 'src="app.js"'),
+  "utf8",
+);
 
 console.log("Cloudflare Pages assets written to dist/.");

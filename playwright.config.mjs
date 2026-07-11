@@ -10,7 +10,7 @@ export default defineConfig({
     trace: "on-first-retry",
   },
   webServer: {
-    command: "pnpm run build:pages && python3 -m http.server 4173 --bind 127.0.0.1 --directory dist",
+    command: "pnpm run build:pages && node scripts/serve-dist.mjs",
     url: "http://127.0.0.1:4173",
     reuseExistingServer: false,
     timeout: 30_000,

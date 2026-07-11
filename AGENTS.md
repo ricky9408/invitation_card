@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-This is a static Cloudflare Pages wedding invitation site. Browser source lives in `src/app.ts` and is bundled to `dist/app.js` by `scripts/build-pages.mjs`. Static page structure and styling are in `index.html` and `styles.css`; images live in `assets/`. RSVP is an external Google Form link. Playwright tests are in `tests/`, with visual-check output under `tests/artifacts/`. Terraform for Cloudflare Pages, DNS, and domain setup is in `terraform/`.
+This is a static Cloudflare Pages wedding invitation site. Browser source lives in `src/app.ts` and is bundled to `dist/app.js` by `scripts/build-pages.mjs`. Local development uses Vite (`pnpm dev`) for hot reload without a build step. Static page structure and styling are in `index.html` and `styles.css`; images live in `assets/`. RSVP is an external Google Form link. Playwright tests are in `tests/`, with visual-check output under `tests/artifacts/`. Terraform for Cloudflare Pages, DNS, and domain setup is in `terraform/`.
 
 ## Build, Test, and Development Commands
 
@@ -10,8 +10,10 @@ Use pnpm only.
 
 ```sh
 pnpm install --frozen-lockfile  # install exact locked dependencies
+pnpm dev                        # Vite hot-reload server at http://127.0.0.1:5173
 pnpm run typecheck              # compile-check TypeScript projects
 pnpm run build:pages            # write Cloudflare Pages assets to dist/
+pnpm run preview                # build then serve dist/ at http://127.0.0.1:4173
 pnpm run test:e2e               # run Playwright guest-flow tests
 pnpm run visual:check           # run visual smoke checks against a served URL
 pnpm run validate               # full app + Terraform validation

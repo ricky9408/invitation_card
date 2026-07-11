@@ -12,8 +12,11 @@
     "build:pages": "node scripts/build-pages.mjs",
     "deploy:cloudflare": "sh scripts/deploy-cloudflare.sh",
     "deploy:pages": "pnpm run deploy:cloudflare",
+    "dev": "vite",
     "lefthook:install": "lefthook install",
+    "preview": "pnpm run build:pages && node scripts/serve-dist.mjs",
     "security:audit": "pnpm audit --audit-level high",
+    "serve:dist": "node scripts/serve-dist.mjs",
     "terraform:fmt": "terraform -chdir=terraform fmt -recursive",
     "terraform:fmt:check": "terraform -chdir=terraform fmt -check -recursive",
     "terraform:init": "terraform -chdir=terraform init",
@@ -31,6 +34,7 @@
     "esbuild": "0.28.1",
     "lefthook": "2.1.9",
     "typescript": "6.0.3",
+    "vite": "8.1.4",
     "wrangler": "4.103.0"
   }
 }

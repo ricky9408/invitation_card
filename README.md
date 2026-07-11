@@ -12,13 +12,29 @@ pnpm install --frozen-lockfile
 
 The editable browser source is `src/app.ts`. Cloudflare Pages assets are generated into `dist/`.
 
-## Local Preview
+## Local Development
 
-Build and serve the compiled Pages output:
+Hot-reload development (no build step):
+
+```sh
+pnpm dev
+```
+
+Opens `http://127.0.0.1:5173`. Edits to `src/app.ts`, `styles.css`, and `index.html` update in the browser automatically.
+
+## Production Preview
+
+Build and serve the compiled Pages output (no Python):
+
+```sh
+pnpm run preview
+```
+
+Or build first, then serve:
 
 ```sh
 pnpm run build:pages
-python3 -m http.server 4173 --bind 127.0.0.1 --directory dist
+pnpm run serve:dist
 ```
 
 Then open `http://127.0.0.1:4173`.
@@ -32,7 +48,7 @@ pnpm run build:pages
 
 ## Visual Check
 
-With the local server running:
+With a server running against built assets (for example `pnpm run preview`):
 
 ```sh
 pnpm run visual:check
