@@ -68,19 +68,19 @@ type TranslationPath = string;
 const translations: Record<Language, Translation> = {
   ja: {
     meta: {
-      title: "SANGHYUK & PARTNER の招待状",
-      description: "SANGHYUK & PARTNER の結婚式招待状",
+      title: "SANGHYUK & MIYUKI の招待状",
+      description: "SANGHYUK & MIYUKI の結婚式招待状",
     },
     side: {
       dateLabel: "Date",
       replyPrompt: "ご出欠のご返信をお願いいたします",
     },
     event: {
-      sideTime: "受付 10:30 / 挙式 11:00",
-      replyBy: "09月20日まで",
+      sideTime: "挙式 10:30 / 受付 11:00 / 披露宴 11:30 ~ 14:00",
+      replyBy: "09月17日まで",
       ceremonyTitle: "Wedding Ceremony",
-      reception: "受付 10:30",
-      ceremony: "挙式 11:00",
+      reception: "受付 11:00",
+      ceremony: "挙式 10:30",
     },
     sections: {
       greeting: "ご挨拶",
@@ -103,19 +103,25 @@ const translations: Record<Language, Translation> = {
     },
     profile: {
       groomRole: "Groom",
-      groomName: "イ・サンヒョク",
+      groomName: "イ・サンヒョック",
       groomMessage: "皆さまにお会いできますことを心より楽しみにしております。",
       partnerRole: "Bride",
-      partnerName: "お名前を入力",
+      partnerName: "緒方美友紀",
       partnerMessage: "温かな一日を一緒に過ごしていただけましたら幸いです。",
     },
     info: {
       venueLabel: "会場",
-      venue: "会場名を入力してください",
+      venue: "フランス料理レストラン　ル・ジャルダン",
       addressLabel: "住所",
-      address: "東京都内 / 詳細住所を入力してください",
+      address: "157-0075 東京都世田谷区砧公園1-2",
       accessLabel: "アクセス",
-      access: "最寄駅から徒歩約5分",
+      access:
+        "・東急田園都市線　「用賀駅」下車　徒歩17分\n" +
+        "・[用21][用22]　東急バス「用賀駅～美術館」で「美術館」下車　徒歩３分\n" +
+        "・[園01]　東急バス「千歳船橋駅～田園調布駅」で「美術館入口」下車　徒歩５分\n" +
+        "・[渋24]　東急バス／小田急バス「成城学園前駅～渋谷駅」で「砧町」下車　徒歩10分\n" +
+        "※ 駅からタクシーでお越しの方は会場にて領収書を頂けますと現金一千円をお渡しいたします\n" +
+        "※　お車でお越しの方は、レストラン専用無料駐車場をご利用いただけます。",
     },
     message: {
       title: "Message",
@@ -127,7 +133,7 @@ const translations: Record<Language, Translation> = {
     },
     rsvp: {
       title: "ご出欠について",
-      intro: "2026年9月20日までにご回答をお願いいたします。",
+      intro: "2026年9月17日までにご回答をお願いいたします。",
       submit: "Googleフォームで回答する",
       note: "フォームは別タブで開きます。",
     },
@@ -142,19 +148,19 @@ const translations: Record<Language, Translation> = {
   },
   en: {
     meta: {
-      title: "SANGHYUK & PARTNER's Wedding Invitation",
-      description: "Wedding invitation for SANGHYUK & PARTNER",
+      title: "SANGHYUK & MIYUKI's Wedding Invitation",
+      description: "Wedding invitation for SANGHYUK & MIYUKI",
     },
     side: {
       dateLabel: "Date",
       replyPrompt: "Please let us know whether you can attend.",
     },
     event: {
-      sideTime: "Reception 10:30 / Ceremony 11:00",
-      replyBy: "Reply by September 20",
+      sideTime: "Ceremony 10:30 / Check-in 11:00 / Reception 11:30 – 14:00",
+      replyBy: "Reply by September 17",
       ceremonyTitle: "Wedding Ceremony",
-      reception: "Reception 10:30",
-      ceremony: "Ceremony 11:00",
+      reception: "Check-in 11:00",
+      ceremony: "Ceremony 10:30",
     },
     sections: {
       greeting: "Greeting",
@@ -180,17 +186,23 @@ const translations: Record<Language, Translation> = {
       groomMessage:
         "I am looking forward to sharing this special day with you.",
       partnerRole: "Bride",
-      partnerName: "Partner name",
+      partnerName: "Miyuki Ogata",
       partnerMessage:
         "It would mean so much to spend a warm and joyful day together.",
     },
     info: {
       venueLabel: "Venue",
-      venue: "Venue name to be added",
+      venue: "French Restaurant Le Jardin",
       addressLabel: "Address",
-      address: "Tokyo area / detailed address to be added",
+      address: "1-2 Kinuta Park, Setagaya-ku, Tokyo 157-0075",
       accessLabel: "Access",
-      access: "About 5 minutes on foot from the nearest station",
+      access:
+        "・Tokyu Den-en-toshi Line: 17-minute walk from Yoga Station\n" +
+        "・Tokyu Bus [用21][用22] (Yoga Sta. – Museum): get off at Museum, 3-minute walk\n" +
+        "・Tokyu Bus [園01] (Chitose-Funabashi Sta. – Den-en-chofu Sta.): get off at Museum Entrance, 5-minute walk\n" +
+        "・Tokyu/Odakyu Bus [渋24] (Seijogakuen-mae Sta. – Shibuya Sta.): get off at Kinuta-cho, 10-minute walk\n" +
+        "※ Guests arriving by taxi from the station will receive ¥1,000 cash upon presenting the receipt at the venue\n" +
+        "※ Free restaurant parking is available for guests arriving by car.",
     },
     message: {
       title: "Message",
@@ -202,7 +214,7 @@ const translations: Record<Language, Translation> = {
     },
     rsvp: {
       title: "RSVP",
-      intro: "Please reply by September 20, 2026.",
+      intro: "Please reply by September 17, 2026.",
       submit: "Reply with Google Form",
       note: "The form opens in a new tab.",
     },
@@ -217,19 +229,19 @@ const translations: Record<Language, Translation> = {
   },
   ko: {
     meta: {
-      title: "SANGHYUK & PARTNER 청첩장",
-      description: "SANGHYUK & PARTNER의 결혼식 초대장",
+      title: "SANGHYUK & MIYUKI 청첩장",
+      description: "SANGHYUK & MIYUKI의 결혼식 초대장",
     },
     side: {
       dateLabel: "Date",
       replyPrompt: "참석 여부를 알려 주시면 감사하겠습니다.",
     },
     event: {
-      sideTime: "접수 10:30 / 예식 11:00",
-      replyBy: "9월 20일까지",
+      sideTime: "예식 10:30 / 접수 11:00 / 피로연 11:30 ~ 14:00",
+      replyBy: "9월 17일까지",
       ceremonyTitle: "Wedding Ceremony",
-      reception: "접수 10:30",
-      ceremony: "예식 11:00",
+      reception: "접수 11:00",
+      ceremony: "예식 10:30",
     },
     sections: {
       greeting: "초대의 글",
@@ -255,17 +267,23 @@ const translations: Record<Language, Translation> = {
       groomMessage:
         "소중한 분들과 이 날을 함께할 수 있기를 진심으로 기다리고 있습니다.",
       partnerRole: "Bride",
-      partnerName: "배우자 이름",
+      partnerName: "오가타 미유키",
       partnerMessage:
         "따뜻하고 기쁜 하루를 함께 나눌 수 있다면 감사하겠습니다.",
     },
     info: {
       venueLabel: "장소",
-      venue: "예식장명을 입력해 주세요",
+      venue: "프렌치 레스토랑 르 자르댕",
       addressLabel: "주소",
-      address: "도쿄 지역 / 상세 주소를 입력해 주세요",
+      address: "157-0075 도쿄도 세타가야구 키누타공원 1-2",
       accessLabel: "오시는 길",
-      access: "가까운 역에서 도보 약 5분",
+      access:
+        "・도큐 덴엔토시선 「요가역」 하차 도보 17분\n" +
+        "・[用21][用22] 도큐버스 「요가역～미술관」 「미술관」 하차 도보 3분\n" +
+        "・[園01] 도큐버스 「치토세후나바시역～덴엔초후역」 「미술관입구」 하차 도보 5분\n" +
+        "・[渋24] 도큐버스／오다큐버스 「세이조가쿠엔마에역～시부야역」 「키누타초」 하차 도보 10분\n" +
+        "※ 역에서 택시로 오시는 분은 행사장에서 영수증을 제출해 주시면 현금 1,000엔을 드립니다\n" +
+        "※ 자가용으로 오시는 분은 레스토랑 전용 무료 주차장을 이용하실 수 있습니다.",
     },
     message: {
       title: "Message",
@@ -277,7 +295,7 @@ const translations: Record<Language, Translation> = {
     },
     rsvp: {
       title: "참석 여부",
-      intro: "2026년 9월 20일까지 회신 부탁드립니다.",
+      intro: "2026년 9월 17일까지 회신 부탁드립니다.",
       submit: "Google Form으로 답변하기",
       note: "폼은 새 탭에서 열립니다.",
     },
@@ -301,7 +319,7 @@ function isLanguage(value: string | null | undefined): value is Language {
 const savedLanguage = localStorage.getItem("invitationLanguage");
 const state = {
   selectedLanguage: isLanguage(savedLanguage) ? savedLanguage : "ja",
-  eventDate: new Date("2026-10-31T11:00:00+09:00"),
+  eventDate: new Date("2026-10-18T10:30:00+09:00"),
 } satisfies {
   selectedLanguage: Language;
   eventDate: Date;

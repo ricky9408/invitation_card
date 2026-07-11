@@ -10,6 +10,23 @@ RSVP is handled by a Google Form link in the static site. Terraform does not man
 
 ## Terraform
 
+Create a Cloudflare API token for Terraform. The token must be an **API Token**, not the legacy Global API Key.
+
+Required permissions:
+
+```text
+Account > Cloudflare Pages > Edit
+Zone    > DNS              > Write
+Zone    > Zone             > Read
+```
+
+Recommended resource scope:
+
+```text
+Account Resources: Include > your Cloudflare account
+Zone Resources:    Include > Specific zone > sanghyuk-lee.com
+```
+
 Create `terraform.tfvars` locally:
 
 ```hcl

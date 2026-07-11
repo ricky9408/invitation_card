@@ -3,7 +3,7 @@ output "pages_project_name" {
 }
 
 output "pages_default_domain" {
-  value = "${cloudflare_pages_project.invitation.name}.pages.dev"
+  value = cloudflare_pages_project.invitation.subdomain
 }
 
 output "invitation_domain" {

@@ -30,7 +30,7 @@ resource "cloudflare_dns_record" "invitation" {
   zone_id = var.cloudflare_zone_id
   name    = var.subdomain == "" ? "@" : var.subdomain
   type    = "CNAME"
-  content = "${cloudflare_pages_project.invitation.name}.pages.dev"
+  content = cloudflare_pages_project.invitation.subdomain
   ttl     = 1
   proxied = true
 }

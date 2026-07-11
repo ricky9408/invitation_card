@@ -31,6 +31,6 @@
     "esbuild": "0.28.1",
     "lefthook": "2.1.9",
     "typescript": "6.0.3",
-    "wrangler": "4.100.0"
+    "wrangler": "4.103.0"
   }
 }
