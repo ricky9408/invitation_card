@@ -1,7 +1,7 @@
 import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { build } from "esbuild";
 
-const files = ["index.html", "styles.css", "_headers", "assets"];
+const files = ["index.html", "styles.css", "_headers", "assets", "favicon.svg"];
 const outDir = new URL("../dist/", import.meta.url);
 
 await rm(outDir, { recursive: true, force: true });

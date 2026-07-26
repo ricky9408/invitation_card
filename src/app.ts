@@ -9,11 +9,12 @@ type Translation = {
     replyPrompt: string;
   };
   event: {
+    weekday: string;
     sideTime: string;
     replyBy: string;
     ceremonyTitle: string;
-    reception: string;
     ceremony: string;
+    reception: string;
   };
   sections: {
     greeting: string;
@@ -32,6 +33,8 @@ type Translation = {
     partnerMessage: string;
   };
   info: {
+    scheduleLabel: string;
+    schedule: string;
     venueLabel: string;
     venue: string;
     addressLabel: string;
@@ -76,11 +79,13 @@ const translations: Record<Language, Translation> = {
       replyPrompt: "ご出欠のご返信をお願いいたします",
     },
     event: {
-      sideTime: "挙式 10:30 / 受付 11:00 / 披露宴 11:30 ~ 14:00",
+      weekday: "日曜日",
+      sideTime:
+        "挙式ゲスト集合 10:15 / 挙式 10:30\n披露宴受付 11:00 / 披露宴 11:30",
       replyBy: "09月17日まで",
       ceremonyTitle: "Wedding Ceremony",
-      reception: "受付 11:00",
       ceremony: "挙式 10:30",
+      reception: "披露宴 11:30",
     },
     sections: {
       greeting: "ご挨拶",
@@ -110,6 +115,12 @@ const translations: Record<Language, Translation> = {
       partnerMessage: "温かな一日を一緒に過ごしていただけましたら幸いです。",
     },
     info: {
+      scheduleLabel: "スケジュール",
+      schedule:
+        "・挙式ゲスト集合　10:15\n" +
+        "・挙式開始　10:30\n" +
+        "・披露宴受付　11:00\n" +
+        "・披露宴開始　11:30",
       venueLabel: "会場",
       venue: "フランス料理レストラン　ル・ジャルダン",
       addressLabel: "住所",
@@ -117,15 +128,15 @@ const translations: Record<Language, Translation> = {
       accessLabel: "アクセス",
       access:
         "・東急田園都市線　「用賀駅」下車　徒歩17分\n" +
-        "・[用21][用22]　東急バス「用賀駅～美術館」で「美術館」下車　徒歩３分\n" +
-        "・[園01]　東急バス「千歳船橋駅～田園調布駅」で「美術館入口」下車　徒歩５分\n" +
+        "・[用21][用22]　東急バス「用賀駅～美術館」で「美術館」下車　徒歩3分\n" +
+        "・[園01]　東急バス「千歳船橋駅～田園調布駅」で「美術館入口」下車　徒歩5分\n" +
         "・[渋24]　東急バス／小田急バス「成城学園前駅～渋谷駅」で「砧町」下車　徒歩10分\n" +
         "※ 駅からタクシーでお越しの方は会場にて領収書を頂けますと現金一千円をお渡しいたします\n" +
-        "※　お車でお越しの方は、レストラン専用無料駐車場をご利用いただけます。",
+        "※ お車でお越しの方は、レストラン専用無料駐車場をご利用いただけます。",
     },
     message: {
       title: "Message",
-      body: "遠方よりお越しくださる皆さまにも安心してご参加いただけるよう、会場情報や当日の流れは順次こちらに追記いたします。",
+      body: "遠方よりお越しの皆さま、心より感謝申し上げます。当日のスケジュールと会場へのアクセスは、上記 Information をご確認ください。",
     },
     request: {
       title: "Request",
@@ -156,11 +167,13 @@ const translations: Record<Language, Translation> = {
       replyPrompt: "Please let us know whether you can attend.",
     },
     event: {
-      sideTime: "Ceremony 10:30 / Check-in 11:00 / Reception 11:30 – 14:00",
+      weekday: "Sunday",
+      sideTime:
+        "Ceremony gathering 10:15 / Ceremony 10:30\nReception check-in 11:00 / Reception 11:30",
       replyBy: "Reply by September 17",
       ceremonyTitle: "Wedding Ceremony",
-      reception: "Check-in 11:00",
       ceremony: "Ceremony 10:30",
+      reception: "Reception 11:30",
     },
     sections: {
       greeting: "Greeting",
@@ -191,6 +204,12 @@ const translations: Record<Language, Translation> = {
         "It would mean so much to spend a warm and joyful day together.",
     },
     info: {
+      scheduleLabel: "Schedule",
+      schedule:
+        "・Ceremony guest gathering　10:15\n" +
+        "・Ceremony begins　10:30\n" +
+        "・Reception check-in　11:00\n" +
+        "・Reception begins　11:30",
       venueLabel: "Venue",
       venue: "French Restaurant Le Jardin",
       addressLabel: "Address",
@@ -206,7 +225,7 @@ const translations: Record<Language, Translation> = {
     },
     message: {
       title: "Message",
-      body: "For guests joining us from afar, venue details and the day-of schedule will be added here as they are finalized.",
+      body: "Thank you for joining us, including those traveling from afar. Please check the schedule and venue access details above for the day of the wedding.",
     },
     request: {
       title: "Request",
@@ -237,11 +256,13 @@ const translations: Record<Language, Translation> = {
       replyPrompt: "참석 여부를 알려 주시면 감사하겠습니다.",
     },
     event: {
-      sideTime: "예식 10:30 / 접수 11:00 / 피로연 11:30 ~ 14:00",
+      weekday: "일요일",
+      sideTime:
+        "예식 게스트 도착 10:15 / 예식 10:30\n피로연 접수 11:00 / 피로연 11:30",
       replyBy: "9월 17일까지",
       ceremonyTitle: "Wedding Ceremony",
-      reception: "접수 11:00",
       ceremony: "예식 10:30",
+      reception: "피로연 11:30",
     },
     sections: {
       greeting: "초대의 글",
@@ -272,6 +293,12 @@ const translations: Record<Language, Translation> = {
         "따뜻하고 기쁜 하루를 함께 나눌 수 있다면 감사하겠습니다.",
     },
     info: {
+      scheduleLabel: "일정",
+      schedule:
+        "・예식 게스트 도착　10:15\n" +
+        "・예식 시작　10:30\n" +
+        "・피로연 접수　11:00\n" +
+        "・피로연 시작　11:30",
       venueLabel: "장소",
       venue: "프렌치 레스토랑 르 자르댕",
       addressLabel: "주소",
@@ -287,11 +314,11 @@ const translations: Record<Language, Translation> = {
     },
     message: {
       title: "Message",
-      body: "멀리서 와 주시는 분들도 편히 참석하실 수 있도록 장소 정보와 당일 일정은 확정되는 대로 이곳에 안내드리겠습니다.",
+      body: "멀리서 와 주시는 분들께 진심으로 감사드립니다. 당일 일정과 오시는 길은 위의 Information 안내를 확인해 주세요.",
     },
     request: {
       title: "Request",
-      body: "아래 양식으로 기한 내 참석 여부를 알려 주세요.",
+      body: "번거로우시겠지만 아래 양식으로 기한 내 참석 여부를 알려 주세요.",
     },
     rsvp: {
       title: "참석 여부",

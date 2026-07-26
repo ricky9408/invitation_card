@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Wedding invitation">
+  <rect width="64" height="64" rx="14" fill="#5cb1c1"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Interlocking wedding rings -->
+    <circle cx="27" cy="33" r="12.5" stroke="#ffeab0" stroke-width="3.2"/>
+    <circle cx="37" cy="33" r="12.5" stroke="#f9f5f1" stroke-width="3.2"/>
+    <!-- Small sparkle / diamond accent -->
+    <path d="M32 14l1.6 3.4 3.4 1.6-3.4 1.6L32 24l-1.6-3.4L27 19l3.4-1.6z" fill="#ffeab0" stroke="none"/>
+  </g>
+</svg>

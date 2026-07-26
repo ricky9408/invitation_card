@@ -6,6 +6,8 @@
         <meta name="theme-color" content="#5cb1c1" />
         <title>SANGHYUK & MIYUKI の招待状</title>
         <meta name="description" content="SANGHYUK & MIYUKI の結婚式招待状" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/favicon.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -51,8 +53,10 @@
                         <span class="side-slash"></span>
                         <span>10.18</span>
                     </div>
+                    <p class="side-weekday" data-i18n="event.weekday">日曜日</p>
                     <p class="side-time" data-i18n="event.sideTime">
-                        挙式 10:30 / 披露宴受付 11:00
+                        挙式ゲスト集合 10:15 / 挙式 10:30
+                        披露宴受付 11:00 / 披露宴 11:30
                     </p>
                 </div>
                 <div class="side-message">
@@ -205,17 +209,29 @@
                     <div class="info-top">
                         <p data-i18n="event.ceremonyTitle">Wedding Ceremony</p>
                         <h2>2026.10.18</h2>
+                        <p class="info-weekday" data-i18n="event.weekday">
+                            日曜日
+                        </p>
                         <div class="time-row">
-                            <span data-i18n="event.reception">挙式 10:30</span>
+                            <span data-i18n="event.ceremony">挙式 10:30</span>
                             <i></i>
-                            <span data-i18n="event.ceremony"
-                                >披露宴受付 11:30</span
-                            >
+                            <span data-i18n="event.reception">披露宴 11:30</span>
                         </div>
                     </div>
                     <div class="info-block">
                         <h3>Information</h3>
                         <dl>
+                            <div>
+                                <dt data-i18n="info.scheduleLabel">
+                                    スケジュール
+                                </dt>
+                                <dd data-i18n="info.schedule">
+                                    ・挙式ゲスト集合　10:15
+                                    ・挙式開始　10:30
+                                    ・披露宴受付　11:00
+                                    ・披露宴開始　11:30
+                                </dd>
+                            </div>
                             <div>
                                 <dt data-i18n="info.venueLabel">会場</dt>
                                 <dd data-i18n="info.venue">
@@ -252,8 +268,8 @@
                             Message
                         </p>
                         <p data-i18n="message.body">
-                            遠方よりお越しくださる皆さまにも安心してご参加いただけるよう、
-                            会場情報や当日の流れは順次こちらに追記いたします。
+                            遠方よりお越しの皆さま、心より感謝申し上げます。当日のスケジュールと会場へのアクセスは、上記
+                            Information をご確認ください。
                         </p>
                     </div>
                     <div class="message-card">
@@ -277,7 +293,7 @@
                         <a
                             class="rsvp-link"
                             id="rsvpLink"
-                            href="https://forms.gle/REPLACE_WITH_YOUR_GOOGLE_FORM_ID"
+                            href="https://forms.gle/aVozsCosGEx8gh6XA"
                             target="_blank"
                             rel="noopener noreferrer"
                             data-i18n="rsvp.submit"

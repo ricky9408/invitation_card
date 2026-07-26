@@ -23,6 +23,7 @@ const mimeTypes = {
   ".webp": "image/webp",
   ".woff": "font/woff",
   ".woff2": "font/woff2",
+  ".JPG": "image/jpeg",
 };
 
 if (!existsSync(rootDir)) {
