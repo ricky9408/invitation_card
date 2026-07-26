@@ -573,12 +573,13 @@ section {
 }
 
 .profile-photo {
-    background-image: url("assets/pink-wall.jpeg");
+    background-image: url("assets/Sanghyuk_wedding.jpg");
     height: 350px;
     border-radius: 66px 66px 28px 28px;
 }
 
 .profile-card:nth-of-type(2) .profile-photo {
+    background-image: url("assets/Miyuki_wedding.jpg");
     background-position: 43% center;
 }
 
@@ -628,7 +629,7 @@ section {
 }
 
 .photo-a {
-    background-image: url("assets/autumn-seating.jpeg");
+    background-image: url("assets/pinkwall-kiss.JPG");
     background-position: left center;
 }
 
@@ -640,8 +641,15 @@ section {
 }
 
 .photo-c {
-    background-image: url("assets/beach-black.jpeg");
+    background-image: url("assets/autumn-seating.jpeg");
     background-position: right center;
+}
+
+.photo-d {
+    background-image: url("assets/beach-black.jpeg");
+    min-height: 290px;
+    border-radius: 999px;
+    background-position: center 40%;
 }
 
 .information {
