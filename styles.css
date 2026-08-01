@@ -624,6 +624,22 @@ section {
 
 .profile-photo.bride {
     object-position: 43% center;
+    /* Slightly brighter, cleaner white skin tone */
+    filter: brightness(1.28) contrast(0.92) saturate(0.9) sepia(0.02);
+}
+
+/* Cooler white soft-light lift for bride only */
+.profile-photo-wrap:has(.bride)::before {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.profile-photo-wrap:has(.bride)::after {
+    background: radial-gradient(
+        ellipse 90% 75% at 50% 35%,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0.18) 55%,
+        rgba(255, 255, 255, 0) 100%
+    );
 }
 
 .profile-role {

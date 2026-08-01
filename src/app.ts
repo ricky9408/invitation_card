@@ -108,10 +108,10 @@ const translations: Record<Language, Translation> = {
     },
     profile: {
       groomRole: "Groom",
-      groomName: "イ・サンヒョック",
+      groomName: "イ サンヒョック",
       groomMessage: "皆さまにお会いできますことを心より楽しみにしております。",
       partnerRole: "Bride",
-      partnerName: "緒方美友紀",
+      partnerName: "緒方 美友紀",
       partnerMessage: "温かな一日を一緒に過ごしていただけましたら幸いです。",
     },
     info: {
@@ -284,7 +284,7 @@ const translations: Record<Language, Translation> = {
     },
     profile: {
       groomRole: "Groom",
-      groomName: "이상혁",
+      groomName: "이 상혁",
       groomMessage:
         "소중한 분들과 이 날을 함께할 수 있기를 진심으로 기다리고 있습니다.",
       partnerRole: "Bride",
