@@ -324,15 +324,14 @@ textarea {
 .rounded-image,
 .profile-photo,
 .gallery-photo {
-    background-image: url("assets/autumn-yellow.jpeg");
-    background-size: cover;
-    background-position: center;
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 .hero-photo {
-    width: 100%;
     height: 100%;
-    animation: slowZoom 16s ease-in-out infinite alternate;
 }
 
 .hero-caption {
@@ -523,11 +522,10 @@ section {
 }
 
 .rounded-image {
-    background-image: url("assets/beach-hang.jpeg");
     height: 420px;
     margin-bottom: 32px;
     border-radius: 80px;
-    background-position: 58% center;
+    object-position: 58% center;
 }
 
 .vertical-message {
@@ -583,15 +581,49 @@ section {
     margin-top: 24px;
 }
 
-.profile-photo {
-    background-image: url("assets/Sanghyuk_wedding.jpg");
+.profile-photo-wrap {
+    position: relative;
     height: 350px;
+    overflow: hidden;
     border-radius: 66px 66px 28px 28px;
 }
 
-.profile-card:nth-of-type(2) .profile-photo {
-    background-image: url("assets/Miyuki_wedding.jpg");
-    background-position: 43% center;
+/* Soft bright lift (no blur): light veil + soft-light blend */
+.profile-photo-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    border-radius: inherit;
+    background: rgba(255, 250, 242, 0.22);
+    mix-blend-mode: soft-light;
+}
+
+.profile-photo-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    border-radius: inherit;
+    background: radial-gradient(
+        ellipse 90% 75% at 50% 35%,
+        rgba(255, 252, 246, 0.42) 0%,
+        rgba(255, 248, 235, 0.14) 55%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    mix-blend-mode: soft-light;
+}
+
+.profile-photo {
+    height: 100%;
+    /* Keep detail; gentle warm lift only */
+    filter: brightness(1.18) contrast(0.94) saturate(1.03) sepia(0.05);
+}
+
+.profile-photo.bride {
+    object-position: 43% center;
 }
 
 .profile-role {
@@ -636,31 +668,30 @@ section {
 
 .gallery-photo {
     min-height: 330px;
+    height: 330px;
     border-radius: 80px;
 }
 
 .photo-a {
-    background-image: url("assets/pinkwall-kiss.JPG");
-    background-position: left center;
+    object-position: left center;
 }
 
 .photo-b {
-    background-image: url("assets/beach-walking.jpeg");
     min-height: 230px;
+    height: 230px;
     border-radius: 999px;
-    background-position: 60% 42%;
+    object-position: 60% 42%;
 }
 
 .photo-c {
-    background-image: url("assets/autumn-seating.jpeg");
-    background-position: right center;
+    object-position: right center;
 }
 
 .photo-d {
-    background-image: url("assets/beach-black.jpeg");
     min-height: 290px;
+    height: 290px;
     border-radius: 999px;
-    background-position: center 40%;
+    object-position: center 40%;
 }
 
 .information {
@@ -756,6 +787,19 @@ section {
     line-height: 1.6;
     letter-spacing: 1.4px;
     white-space: pre-line;
+}
+
+.info-block dt.info-label-emphasis {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+}
+
+.info-block dd.info-text-emphasis {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.75;
+    letter-spacing: 0.6px;
 }
 
 .map-button {
@@ -957,16 +1001,6 @@ section {
 .reveal.is-visible {
     opacity: 1;
     transform: translateZ(0);
-}
-
-@keyframes slowZoom {
-    from {
-        transform: scale(1);
-    }
-
-    to {
-        transform: scale(1.12);
-    }
 }
 
 @keyframes slideInLeft {

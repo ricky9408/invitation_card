@@ -55,8 +55,8 @@
                     </div>
                     <p class="side-weekday" data-i18n="event.weekday">日曜日</p>
                     <p class="side-time" data-i18n="event.sideTime">
-                        挙式ゲスト集合 10:15 / 挙式 10:30
-                        披露宴受付 11:00 / 披露宴 11:30
+                        挙式ゲスト集合 10:15 / 挙式 10:30 披露宴受付 11:00 /
+                        披露宴 11:30
                     </p>
                 </div>
                 <div class="side-message">
@@ -77,7 +77,15 @@
                         <span></span>
                     </div>
                     <div class="hero-photo-frame">
-                        <div class="hero-photo"></div>
+                        <img
+                            class="hero-photo"
+                            src="assets/autumn-yellow.JPG"
+                            alt="Sanghyuk and Miyuki"
+                            width="1448"
+                            height="2172"
+                            decoding="async"
+                            fetchpriority="high"
+                        />
                     </div>
                     <p class="hero-caption hero-caption-top">Wedding</p>
                     <p class="hero-caption hero-caption-mid">Invitation</p>
@@ -130,7 +138,15 @@
                         <p>Greeting</p>
                         <span data-i18n="sections.greeting">ご挨拶</span>
                     </div>
-                    <div class="rounded-image greeting-image"></div>
+                    <img
+                        class="rounded-image greeting-image"
+                        src="assets/beach-hang.JPG"
+                        alt=""
+                        width="1486"
+                        height="2116"
+                        loading="lazy"
+                        decoding="async"
+                    />
                     <div
                         class="vertical-message"
                         data-i18n-list="greeting.lines"
@@ -155,7 +171,17 @@
                         <span data-i18n="sections.host">ホスト</span>
                     </div>
                     <article class="profile-card">
-                        <div class="profile-photo groom"></div>
+                        <div class="profile-photo-wrap">
+                            <img
+                                class="profile-photo groom"
+                                src="assets/Sanghyuk_wedding.jpg"
+                                alt="Sanghyuk Lee"
+                                width="676"
+                                height="812"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                        </div>
                         <div>
                             <p
                                 class="profile-role"
@@ -173,7 +199,17 @@
                         </div>
                     </article>
                     <article class="profile-card">
-                        <div class="profile-photo bride"></div>
+                        <div class="profile-photo-wrap">
+                            <img
+                                class="profile-photo bride"
+                                src="assets/Miyuki_wedding.jpg"
+                                alt="Miyuki Ogata"
+                                width="976"
+                                height="1191"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                        </div>
                         <div>
                             <p
                                 class="profile-role"
@@ -198,10 +234,42 @@
                         >
                     </div>
                     <div class="gallery-grid">
-                        <div class="gallery-photo photo-a"></div>
-                        <div class="gallery-photo photo-b"></div>
-                        <div class="gallery-photo photo-c"></div>
-                        <div class="gallery-photo photo-d"></div>
+                        <img
+                            class="gallery-photo photo-a"
+                            src="assets/pinkwall-kiss.JPG"
+                            alt=""
+                            width="1504"
+                            height="2088"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                        <img
+                            class="gallery-photo photo-b"
+                            src="assets/beach-walking.JPG"
+                            alt=""
+                            width="2128"
+                            height="1478"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                        <img
+                            class="gallery-photo photo-c"
+                            src="assets/autumn-seating.JPG"
+                            alt=""
+                            width="1508"
+                            height="2084"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                        <img
+                            class="gallery-photo photo-d"
+                            src="assets/beach-black.JPG"
+                            alt=""
+                            width="1536"
+                            height="1920"
+                            loading="lazy"
+                            decoding="async"
+                        />
                     </div>
                 </section>
 
@@ -215,26 +283,40 @@
                         <div class="time-row">
                             <span data-i18n="event.ceremony">挙式 10:30</span>
                             <i></i>
-                            <span data-i18n="event.reception">披露宴 11:30</span>
+                            <span data-i18n="event.reception"
+                                >披露宴 11:30</span
+                            >
                         </div>
                     </div>
                     <div class="info-block">
                         <h3>Information</h3>
                         <dl>
                             <div>
-                                <dt data-i18n="info.scheduleLabel">
+                                <dt
+                                    class="info-label-emphasis"
+                                    data-i18n="info.scheduleLabel"
+                                >
                                     スケジュール
                                 </dt>
-                                <dd data-i18n="info.schedule">
-                                    ・挙式ゲスト集合　10:15
-                                    ・挙式開始　10:30
-                                    ・披露宴受付　11:00
-                                    ・披露宴開始　11:30
+                                <dd
+                                    class="info-text-emphasis"
+                                    data-i18n="info.schedule"
+                                >
+                                    ・挙式ゲスト集合　10:15 ・挙式開始 　 10:30
+                                    ・披露宴受付 　 11:00 ・披露宴開始　 11:30
                                 </dd>
                             </div>
                             <div>
-                                <dt data-i18n="info.venueLabel">会場</dt>
-                                <dd data-i18n="info.venue">
+                                <dt
+                                    class="info-label-emphasis"
+                                    data-i18n="info.venueLabel"
+                                >
+                                    会場
+                                </dt>
+                                <dd
+                                    class="info-text-emphasis"
+                                    data-i18n="info.venue"
+                                >
                                     フランス料理レストラン　ル・ジャルダン
                                 </dd>
                             </div>
