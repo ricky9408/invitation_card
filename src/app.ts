@@ -33,6 +33,8 @@ type Translation = {
     partnerMessage: string;
   };
   info: {
+    gatheringLabel: string;
+    gathering: string;
     scheduleLabel: string;
     schedule: string;
     venueLabel: string;
@@ -80,8 +82,7 @@ const translations: Record<Language, Translation> = {
     },
     event: {
       weekday: "日曜日",
-      sideTime:
-        "挙式ゲスト集合 10:15 / 挙式 10:30\n披露宴受付 11:00 / 披露宴 11:30",
+      sideTime: "挙式 10:30 / 披露宴 11:30",
       replyBy: "09月17日まで",
       ceremonyTitle: "Wedding Ceremony",
       ceremony: "挙式 10:30",
@@ -115,12 +116,14 @@ const translations: Record<Language, Translation> = {
       partnerMessage: "温かな一日を一緒に過ごしていただけましたら幸いです。",
     },
     info: {
+      gatheringLabel: "集合時間",
+      gathering:
+        "・ご親族様　9:50まで\n" +
+        "・ゲストの皆様　10:10まで\n" +
+        "・受付担当の4名様　10:00まで",
       scheduleLabel: "スケジュール",
       schedule:
-        "・挙式ゲスト集合　10:15\n" +
-        "・挙式開始　10:30\n" +
-        "・披露宴受付　11:00\n" +
-        "・披露宴開始　11:30",
+        "・挙式開始　10:30\n" + "・披露宴受付　11:00\n" + "・披露宴開始　11:30",
       venueLabel: "会場",
       venue: "フランス料理レストラン　ル・ジャルダン",
       addressLabel: "住所",
@@ -168,8 +171,7 @@ const translations: Record<Language, Translation> = {
     },
     event: {
       weekday: "Sunday",
-      sideTime:
-        "Ceremony gathering 10:15 / Ceremony 10:30\nReception check-in 11:00 / Reception 11:30",
+      sideTime: "Ceremony 10:30 / Reception 11:30",
       replyBy: "Reply by September 17",
       ceremonyTitle: "Wedding Ceremony",
       ceremony: "Ceremony 10:30",
@@ -204,9 +206,13 @@ const translations: Record<Language, Translation> = {
         "It would mean so much to spend a warm and joyful day together.",
     },
     info: {
+      gatheringLabel: "Arrival times",
+      gathering:
+        "・Family　by 9:50\n" +
+        "・Guests　by 10:10\n" +
+        "・Reception staff (4 people)　by 10:00",
       scheduleLabel: "Schedule",
       schedule:
-        "・Ceremony guest gathering　10:15\n" +
         "・Ceremony begins　10:30\n" +
         "・Reception check-in　11:00\n" +
         "・Reception begins　11:30",
@@ -257,8 +263,7 @@ const translations: Record<Language, Translation> = {
     },
     event: {
       weekday: "일요일",
-      sideTime:
-        "예식 게스트 도착 10:15 / 예식 10:30\n피로연 접수 11:00 / 피로연 11:30",
+      sideTime: "예식 10:30 / 피로연 11:30",
       replyBy: "9월 17일까지",
       ceremonyTitle: "Wedding Ceremony",
       ceremony: "예식 10:30",
@@ -293,9 +298,13 @@ const translations: Record<Language, Translation> = {
         "따뜻하고 기쁜 하루를 함께 나눌 수 있다면 감사하겠습니다.",
     },
     info: {
+      gatheringLabel: "도착 시간",
+      gathering:
+        "・가족, 친척분　9:50까지\n" +
+        "・하객 여러분　10:10까지\n" +
+        "・접수 담당 4명　10:00까지",
       scheduleLabel: "일정",
       schedule:
-        "・예식 게스트 도착　10:15\n" +
         "・예식 시작　10:30\n" +
         "・피로연 접수　11:00\n" +
         "・피로연 시작　11:30",

@@ -792,30 +792,19 @@ section {
 }
 
 .info-block dt {
-    font-size: 13px;
+    font-size: 15px;
+    font-weight: 700;
     line-height: 1.4;
-    letter-spacing: 0.52px;
+    letter-spacing: 0.8px;
 }
 
 .info-block dd {
     margin: 0;
     font-size: 14px;
+    font-weight: 400;
     line-height: 1.6;
     letter-spacing: 1.4px;
     white-space: pre-line;
-}
-
-.info-block dt.info-label-emphasis {
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-}
-
-.info-block dd.info-text-emphasis {
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 1.75;
-    letter-spacing: 0.6px;
 }
 
 .map-button {
