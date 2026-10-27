@@ -1,6 +1,6 @@
-import { createReadStream, existsSync, statSync } from "node:fs";
+import { createReadStream, existsSync, realpathSync, statSync } from "node:fs";
 import { createServer } from "node:http";
-import { extname, join, normalize, resolve, sep } from "node:path";
+import { extname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const rootDir = resolve(fileURLToPath(new URL("../dist/", import.meta.url)));
@@ -31,35 +31,53 @@ if (!existsSync(rootDir)) {
   process.exit(1);
 }
 
-function resolveRequestPath(urlPath) {
-  const decoded = decodeURIComponent((urlPath ?? "/").split("?")[0] ?? "/");
-  const relative = decoded === "/" ? "index.html" : decoded.replace(/^\/+/, "");
-  const candidate = resolve(rootDir, relative);
-  const normalizedRoot = normalize(rootDir + sep);
+const realRootDir = realpathSync(rootDir);
 
-  if (!candidate.startsWith(normalizedRoot) && candidate !== rootDir) {
+function isWithinRoot(root, candidate) {
+  const pathFromRoot = relative(root, candidate);
+  return !isAbsolute(pathFromRoot) && pathFromRoot !== ".." && !pathFromRoot.startsWith(`..${sep}`);
+}
+
+function resolveRequestPath(urlPath) {
+  try {
+    const decoded = decodeURIComponent((urlPath ?? "/").split("?")[0] ?? "/");
+    const relativePath = decoded === "/" ? "index.html" : decoded.replace(/^\/+/, "");
+    const candidate = resolve(rootDir, relativePath);
+
+    if (!isWithinRoot(rootDir, candidate)) return null;
+
+    let filePath = realpathSync(candidate);
+    let typePath = candidate;
+    if (!isWithinRoot(realRootDir, filePath)) return null;
+    let info = statSync(filePath);
+    if (info.isDirectory()) {
+      typePath = join(candidate, "index.html");
+      filePath = realpathSync(join(filePath, "index.html"));
+      if (!isWithinRoot(realRootDir, filePath)) return null;
+      info = statSync(filePath);
+    }
+
+    return info.isFile() ? { filePath, typePath } : null;
+  } catch {
     return null;
   }
-
-  if (existsSync(candidate) && statSync(candidate).isDirectory()) {
-    return join(candidate, "index.html");
-  }
-
-  return candidate;
 }
 
 const server = createServer((request, response) => {
-  const filePath = resolveRequestPath(request.url);
+  const target = resolveRequestPath(request.url);
 
-  if (!filePath || !existsSync(filePath) || !statSync(filePath).isFile()) {
+  if (!target) {
     response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
     response.end("Not found");
     return;
   }
 
-  const contentType = mimeTypes[extname(filePath).toLowerCase()] ?? "application/octet-stream";
+  const contentType = mimeTypes[extname(target.typePath).toLowerCase()] ?? "application/octet-stream";
   response.writeHead(200, { "Content-Type": contentType });
-  createReadStream(filePath).pipe(response);
+  const stream = createReadStream(target.filePath);
+  stream.on("error", () => response.destroy());
+  response.on("close", () => stream.destroy());
+  stream.pipe(response);
 });
 
 server.listen(port, host, () => {
