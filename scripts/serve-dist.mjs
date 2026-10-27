@@ -33,27 +33,30 @@ if (!existsSync(rootDir)) {
 
 const realRootDir = realpathSync(rootDir);
 
-function isWithinRoot(root, candidate) {
+function containedPath(root, candidate) {
   const pathFromRoot = relative(root, candidate);
-  return !isAbsolute(pathFromRoot) && pathFromRoot !== ".." && !pathFromRoot.startsWith(`..${sep}`);
+  if (isAbsolute(pathFromRoot) || pathFromRoot === ".." || pathFromRoot.startsWith(".." + sep)) {
+    return null;
+  }
+  return candidate;
 }
 
 function resolveRequestPath(urlPath) {
   try {
     const decoded = decodeURIComponent((urlPath ?? "/").split("?")[0] ?? "/");
     const relativePath = decoded === "/" ? "index.html" : decoded.replace(/^\/+/, "");
-    const candidate = resolve(rootDir, relativePath);
+    const candidate = containedPath(rootDir, resolve(rootDir, relativePath));
 
-    if (!isWithinRoot(rootDir, candidate)) return null;
+    if (!candidate) return null;
 
-    let filePath = realpathSync(candidate);
+    let filePath = containedPath(realRootDir, realpathSync(candidate));
     let typePath = candidate;
-    if (!isWithinRoot(realRootDir, filePath)) return null;
+    if (!filePath) return null;
     let info = statSync(filePath);
     if (info.isDirectory()) {
       typePath = join(candidate, "index.html");
-      filePath = realpathSync(join(filePath, "index.html"));
-      if (!isWithinRoot(realRootDir, filePath)) return null;
+      filePath = containedPath(realRootDir, realpathSync(join(filePath, "index.html")));
+      if (!filePath) return null;
       info = statSync(filePath);
     }
 
