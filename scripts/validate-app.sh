@@ -6,6 +6,7 @@ cd "$(dirname "$0")/.."
 pnpm install --frozen-lockfile
 pnpm run typecheck
 pnpm run build:pages
+pnpm run test:server
 pnpm run security:audit
 pnpm run test:e2e
 
